@@ -1,6 +1,6 @@
 var canvas = document.createElement("canvas")
         var context = canvas.getContext("2d")
-        document.body.appendChild(canvas)
+        document.getElementsByClassName("canvas")[0].appendChild(canvas)
 
         var dpr = window.devicePixelRatio || 1 // falling back to 1
         canvas.style.width = window.innerWidth + "px"
