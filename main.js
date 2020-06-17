@@ -57,6 +57,7 @@ function end(event) {
         lines.push({ "lineWidth": 1, "color": "black", "points": simplify(state.line, 1.3, true) })
         state.line = []
         redraw()
+        save()
     }
 }
 
@@ -75,6 +76,22 @@ function redraw() {
     }
     context.stroke();
 }
+
+
+function save() {
+    window.localStorage[canvas.width + "x" + canvas.height] = JSON.stringify(lines)
+}
+
+function restore() {
+    let saved = window.localStorage[canvas.width + "x" + canvas.height]
+    if (saved) {
+        lines = JSON.parse(saved)
+    }
+    redraw()
+}
+
+
+restore()
 
 canvas.addEventListener("pointerdown", start)
 
