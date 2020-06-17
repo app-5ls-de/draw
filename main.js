@@ -96,7 +96,19 @@ function clear() {
     redraw()
 }
 
+function back() {
+    lines.pop()
+    save()
+    redraw()
+}
+
 restore()
+
+
+document.getElementById("back").onclick=back
+document.getElementById("clear").onclick=clear
+
+
 
 canvas.addEventListener("pointerdown", start)
 

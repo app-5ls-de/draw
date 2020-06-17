@@ -25,12 +25,66 @@
         canvas {
             cursor: crosshair;
         }
+
+        .fixed {
+            position: fixed;
+            display: flex;
+            flex-direction: row;
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .fixed .item {
+            height: fit-content;
+            width: fit-content;
+            padding: 0.2rem;
+        }
+
+        .fixed .item:not(:first-child),
+        .fixed .group:not(:first-child) {
+            margin-left: 0.5rem;
+        }
+
+        .fixed .item>img {
+            height: 2rem;
+        }
+
+        .fixed .item.active>img {
+            background-color: red;
+        }
+
+        .fixed>.group {
+            border: gray;
+            border-style: solid;
+            border-radius: 5px;
+            border-width: 2px;
+        }
+
+        button {
+            padding: 0;
+            border: none;
+            font: inherit;
+            color: inherit;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="canvas"></div>
+
+    <div class="fixed">
+        <div class="group">
+            <button id="back" class="item"><img src="/back.svg"></button>
+            <button id="clear" class="item"><img src="/clear.svg"></button>
+        </div>
+    </div>
 
     <script src="/simplify.js"></script>
     <script src="/main.js"></script>
