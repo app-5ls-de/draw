@@ -4,7 +4,6 @@
  mourner.github.io/simplify-js
 */
 
-(function () { 'use strict';
 
 // to suit your point format, run search/replace for '.x' and '.y';
 // for 3D version, see 3d branch (configurability would draw significant performance overhead)
@@ -111,13 +110,3 @@ function simplify(points, tolerance, highestQuality) {
 
     return points;
 }
-
-// export as AMD module / Node module / browser or worker variable
-if (typeof define === 'function' && define.amd) define(function() { return simplify; });
-else if (typeof module !== 'undefined') {
-    module.exports = simplify;
-    module.exports.default = simplify;
-} else if (typeof self !== 'undefined') self.simplify = simplify;
-else window.simplify = simplify;
-
-})();
