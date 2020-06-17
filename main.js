@@ -90,6 +90,11 @@ function restore() {
     redraw()
 }
 
+function clear() {
+    window.localStorage.clear()
+    lines = []
+    redraw()
+}
 
 restore()
 
