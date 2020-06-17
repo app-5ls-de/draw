@@ -13,48 +13,67 @@ context.lineWidth = 1
 context.lineJoin = context.lineCap = "round"
 
 
-var up = 0
-var down = 1
+var up = 0, down = 1,
+    state = { "x": -1, "y": -1, "pen": up, "line": [] }
 
-var pen = { x: -1, y: -1, state: up }
+var lines = []
+
+
+function push(point) {
+    state.x = point.x
+    state.y = point.y
+    state.line.push({ "x": point.x, "y": point.y })
+}
 
 
 function start(event) {
-    pen.state = down
-    pen.x = event.x
-    pen.y = event.y
+    state.pen = down
+    push(event)
+}
+
+function draw_line(point1, point2) {
+    if (point1.x != point2.x || point1.y != point2.y) {
+        context.beginPath();
+        context.moveTo(point1.x, point1.y);
+        context.lineTo(point2.x, point2.y);
+        context.stroke();
+    }
 }
 
 function move(event) {
-    if (pen.state == down) {
-        if (Math.abs(pen.x - event.x) > 0 || Math.abs(pen.y - event.y) > 0) {
-            context.beginPath();
-            context.moveTo(pen.x, pen.y);
-            context.lineTo(event.x, event.y);
-            context.closePath();
-            context.stroke();
-
-            pen.x = event.x
-            pen.y = event.y
-        }
+    if (state.pen == down) {
+        draw_line(state, event)
+        push(event)
     }
 }
 
 function end(event) {
-    if (pen.state == down) {
+    if (state.pen == down) {
         if (event.x != 0 || event.y != 0) {
-            context.beginPath();
-            context.moveTo(pen.x, pen.y);
-            context.lineTo(event.x, event.y);
-            context.closePath();
-            context.stroke();
-
-            pen.x = event.x
-            pen.y = event.y
+            draw_line(state, event)
+            push(event)
         }
-        context.stroke()
-        pen.state = up
+        state.pen = up
+        lines.push({ "lineWidth": 1, "color": "black", "points": state.line})
+        state.line = []
+        redraw()
     }
+}
+
+function redraw() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+
+    for (let i = 0; i < lines.length; i++) {
+        const l = lines[i].points;
+
+        context.moveTo(l[0].x, l[0].y);
+        for (let j = 1; j < l.length; j++) {
+            const point = l[j];
+            context.lineTo(point.x, point.y);
+        }
+    }
+    context.stroke();
 }
 
 canvas.addEventListener("pointerdown", start)
