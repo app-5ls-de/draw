@@ -54,7 +54,7 @@ function end(event) {
             push(event)
         }
         state.pen = up
-        lines.push({ "lineWidth": 1, "color": "black", "points": simplify(state.line, 1.3, true) })
+        lines.push({ "lineWidth": 1, "color": "black", "points": simplify(state.line, 0.3, true) })
         state.line = []
         redraw()
         save()
